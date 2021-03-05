@@ -20,48 +20,52 @@ class Login extends Component {
       handlePassword,
       userDetails,
     } = this.props;
-    return (
-      <div className="container">
-        <WarningBanner warn={!loggedIn} />
-        <form id="login-form" onSubmit={(e) => onLogin(e)}>
-          <fieldset className="form-group row">
-            <legend className="col-form-legend font-weight-light col-sm-1-12">
-              Username
-            </legend>
-            <div className="col-sm-1-12">
-              <input
-                value={userDetails.username}
-                onChange={(e) => handleUsername(e.target.value)}
-                type="text"
-                name="username"
-                id="username"
-              />
-            </div>
-          </fieldset>
-          <fieldset className="form-group row">
-            <legend className="col-form-legend font-weight-light col-sm-1-12">
-              Password
-            </legend>
-            <div className="col-sm-1-12">
-              <input
-                value={userDetails.password}
-                onChange={(e) => handlePassword(e.target.value)}
-                type="password"
-                name="password"
-                id="password"
-              />
-            </div>
-          </fieldset>
-          <fieldset className="form-group row">
-            <div className="col-form-legend col-sm-1-12">
-              <button type="submit" className="btn btn-primary">
-                Login
-              </button>
-            </div>
-          </fieldset>
-        </form>
-      </div>
-    );
+    let loginForm;
+    if (!loggedIn) {
+      loginForm = (
+        <div className="container">
+          <WarningBanner warn={!loggedIn} />
+          <form id="login-form" onSubmit={(e) => onLogin(e)}>
+            <fieldset className="form-group row">
+              <legend className="col-form-legend font-weight-light col-sm-1-12">
+                Username
+              </legend>
+              <div className="col-sm-1-12">
+                <input
+                  value={userDetails.username}
+                  onChange={(e) => handleUsername(e.target.value)}
+                  type="text"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="form-group row">
+              <legend className="col-form-legend font-weight-light col-sm-1-12">
+                Password
+              </legend>
+              <div className="col-sm-1-12">
+                <input
+                  value={userDetails.password}
+                  onChange={(e) => handlePassword(e.target.value)}
+                  type="password"
+                  name="password"
+                  id="password"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="form-group row">
+              <div className="col-form-legend col-sm-1-12">
+                <button type="submit" className="btn btn-primary">
+                  Login
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      );
+    } else {
+      loginForm = null;
+    }
+    return loginForm;
   }
 }
 

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 
 class DashBoard extends Component {
   render() {
-    return <h1>hey there!</h1>;
+    const { uname } = this.props;
+    return <h1>hey there! {uname}</h1>;
   }
 }
 

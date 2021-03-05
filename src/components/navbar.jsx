@@ -3,11 +3,14 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./login";
 import SignIn from "./signin";
 import "bootstrap/dist/css/bootstrap.css";
+import Logout from "./logout";
 class NavigationBar extends Component {
   render() {
     const {
       loggedIn,
       onLogin,
+      onLogout,
+      onSignIn,
       userDetails,
       handleUsername,
       handlePassword,
@@ -17,8 +20,10 @@ class NavigationBar extends Component {
         <nav className="navbar navbar-expand-md navbar-dark bg-dark">
           <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
             <ul className="navbar-nav mr-auto">
-              <li className="nav-item active font-weight-light m-2">
-                <Link to="/">Splitwise</Link>
+              <li className="nav-item active m-2">
+                <Link className="h3 font-weight-light" to="/">
+                  Splitwise
+                </Link>
               </li>
             </ul>
           </div>
@@ -29,7 +34,7 @@ class NavigationBar extends Component {
                   <Link to="/login">Log In</Link>
                 </li>
                 <li className="nav-item font-weight-light m-2">
-                  <Link to="/signup">Sign Up</Link>
+                  <Link to="/signin">Sign Up</Link>
                 </li>
               </ul>
             </div>
@@ -37,7 +42,9 @@ class NavigationBar extends Component {
             <div className="navbar-collapse collapse w-100 order-2 dual-collapse2">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item font-weight-light m-2">
-                  <Link to="/logout">Log Out</Link>
+                  <Link onClick={onLogout} to="/">
+                    Log Out
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -54,7 +61,16 @@ class NavigationBar extends Component {
             />
           </Route>
           <Route path="/signin">
-            <SignIn />
+            <SignIn
+              loggedIn={loggedIn}
+              onSignIn={onSignIn}
+              userDetails={userDetails}
+              handleUsername={handleUsername}
+              handlePassword={handlePassword}
+            />
+          </Route>
+          <Route path="/logout">
+            <Logout className="text-white" />
           </Route>
         </Switch>
       </Router>

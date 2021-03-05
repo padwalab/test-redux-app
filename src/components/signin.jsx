@@ -1,20 +1,75 @@
-import React, { useState } from "react";
-import Form from "react-bootstrap/Form";
-export default function SignIn() {
-  const [email, setEmail] = useState("");
-  return (
-    <div className="signup">
-      <Form onSubmit="{handleSubmit}">
-        <Form.Group size="lg" controlId="email">
-          <Form.Label>username</Form.Label>
-          <Form.Control
-            autoFocus
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </Form.Group>
-      </Form>
-    </div>
-  );
+import React, { Component } from "react";
+
+class SignIn extends Component {
+  render() {
+    const {
+      loggedIn,
+      onSignIn,
+      handleUsername,
+      handlePassword,
+      userDetails,
+      handleName,
+    } = this.props;
+    let signInForm;
+    if (!loggedIn) {
+      signInForm = (
+        <div className="container">
+          <form id="login-form" onSubmit={(e) => onSignIn(e)}>
+            <fieldset className="form-group row">
+              <legend className="col-form-legend font-weight-light col-sm-1-12">
+                Name
+              </legend>
+              <div className="col-sm-1-12">
+                <input
+                  value={userDetails.name}
+                  onChange={(e) => handleName(e.target.value)}
+                  type="text"
+                  name="username"
+                  id="username"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="form-group row">
+              <legend className="col-form-legend font-weight-light col-sm-1-12">
+                Username
+              </legend>
+              <div className="col-sm-1-12">
+                <input
+                  value={userDetails.username}
+                  onChange={(e) => handleUsername(e.target.value)}
+                  type="text"
+                  name="username"
+                  id="username"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="form-group row">
+              <legend className="col-form-legend font-weight-light col-sm-1-12">
+                Password
+              </legend>
+              <div className="col-sm-1-12">
+                <input
+                  value={userDetails.password}
+                  onChange={(e) => handlePassword(e.target.value)}
+                  type="password"
+                  name="password"
+                  id="password"
+                />
+              </div>
+            </fieldset>
+            <fieldset className="form-group row">
+              <div className="col-form-legend col-sm-1-12">
+                <button type="submit" className="btn btn-primary">
+                  SignIn
+                </button>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      );
+    }
+    return signInForm;
+  }
 }
+
+export default SignIn;
