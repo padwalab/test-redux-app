@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { logInUser } from "../redux/actions/actionHelper";
 
 function WarningBanner(props) {
   if (!props.warn) {
@@ -13,6 +15,10 @@ function WarningBanner(props) {
 
 class Login extends Component {
   render() {
+    state = {
+      username: "",
+      password: "",
+    };
     const {
       loggedIn,
       onLogin,
@@ -47,8 +53,6 @@ class Login extends Component {
                   value={userDetails.password}
                   onChange={(e) => handlePassword(e.target.value)}
                   type="password"
-                  name="password"
-                  id="password"
                 />
               </div>
             </fieldset>
@@ -69,4 +73,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(null, { logInUser })(Login);

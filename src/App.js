@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {logInUser} from './redux/actions/actionHelper'
 import './App.css';
 import DashBoard from './components/dashboard';
 import NavigationBar from './components/navbar';
@@ -10,6 +12,7 @@ class App extends Component {
   }
   onLogin = (e) => {
     e.preventDefault();
+    this.props.logInUser({name: this.state.userDetails.username})
     if (this.state.userDetails.username === "admin" && this.state.userDetails.password === "admin"){
       this.setState({isLoggedIn: true})
       return;
