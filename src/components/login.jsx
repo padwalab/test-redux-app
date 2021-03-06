@@ -14,32 +14,37 @@ function WarningBanner(props) {
 }
 
 class Login extends Component {
+  state = {
+    username: "",
+    password: "",
+  };
+  handleUserName = (username) => {
+    console.log(this.props);
+    this.setState({ username });
+  };
+  handlePassword = (password) => {
+    this.setState({ password });
+  };
+  onLogin = (e) => {
+    e.preventDefault();
+    this.props.logInUser(this.state);
+  };
   render() {
-    state = {
-      username: "",
-      password: "",
-    };
-    const {
-      loggedIn,
-      onLogin,
-      handleUsername,
-      handlePassword,
-      userDetails,
-    } = this.props;
+    // const { loggedIn } = this.props;
     let loginForm;
-    if (!loggedIn) {
+    if (!this.props.loggedIn) {
       loginForm = (
         <div className="container">
-          <WarningBanner warn={!loggedIn} />
-          <form id="login-form" onSubmit={(e) => onLogin(e)}>
+          <WarningBanner warn={!this.props.loggedIn} />
+          <form id="login-form" onSubmit={this.onLogin}>
             <fieldset className="form-group row">
               <legend className="col-form-legend font-weight-light col-sm-1-12">
                 Username
               </legend>
               <div className="col-sm-1-12">
                 <input
-                  value={userDetails.username}
-                  onChange={(e) => handleUsername(e.target.value)}
+                  value={this.state.username}
+                  onChange={(e) => this.handleUserName(e.target.value)}
                   type="text"
                 />
               </div>
@@ -50,8 +55,8 @@ class Login extends Component {
               </legend>
               <div className="col-sm-1-12">
                 <input
-                  value={userDetails.password}
-                  onChange={(e) => handlePassword(e.target.value)}
+                  value={this.state.password}
+                  onChange={(e) => this.handlePassword(e.target.value)}
                   type="password"
                 />
               </div>
@@ -73,4 +78,6 @@ class Login extends Component {
   }
 }
 
-export default connect(null, { logInUser })(Login);
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps, { logInUser })(Login);

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {logInUser} from './redux/actions/actionHelper'
 import './App.css';
 import DashBoard from './components/dashboard';
 import NavigationBar from './components/navbar';
@@ -12,7 +11,6 @@ class App extends Component {
   }
   onLogin = (e) => {
     e.preventDefault();
-    this.props.logInUser({name: this.state.userDetails.username})
     if (this.state.userDetails.username === "admin" && this.state.userDetails.password === "admin"){
       this.setState({isLoggedIn: true})
       return;
@@ -34,16 +32,16 @@ class App extends Component {
   }
   render(){
     let dboard;
-    if (this.state.isLoggedIn) {
-      dboard = <DashBoard uname={this.state.userDetails.username} />
+    if (this.props.loggedIn) {
+      dboard = <DashBoard uname={this.props.currentUser.name} />
     }
     return (
       <React.Fragment>
-        <NavigationBar loggedIn={this.state.isLoggedIn} onSignIn={this.onSignIn} handleUsername={this.handleUsername} userDetails={this.state.userDetails} onLogin={this.onLogin} onLogout={this.onLogout} handlePassword={this.handlePassword} />
-        { this.state.isLoggedIn ? dboard : null }
+        <NavigationBar userDetails={this.state.userDetails} onLogin={this.onLogin} onLogout={this.onLogout} handlePassword={this.handlePassword} />
+        { this.props.loggedIn ? dboard : null }
       </React.Fragment>
     );
   }
 }
-
-export default App;
+const mapStateToProps = state => state;
+export default connect(mapStateToProps, null)(App);

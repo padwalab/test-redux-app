@@ -3,14 +3,21 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Login from "./login";
 import SignIn from "./signin";
 import "bootstrap/dist/css/bootstrap.css";
+import { logOutUser } from "../redux/actions/actionHelper";
 import Logout from "./logout";
+import { connect } from "react-redux";
 class NavigationBar extends Component {
+  handleLogout = (e) => {
+    e.preventDefault();
+    this.props.logOutUser();
+    
+  };
   render() {
     const {
-      loggedIn,
+      // loggedIn,
       onLogin,
-      onLogout,
-      onSignIn,
+      // onLogout,
+      // onSignIn,
       userDetails,
       handleUsername,
       handlePassword,
@@ -42,7 +49,7 @@ class NavigationBar extends Component {
             <div className="navbar-collapse collapse w-100 order-2 dual-collapse2">
               <ul className="navbar-nav ml-auto">
                 <li className="nav-item font-weight-light m-2">
-                  <Link onClick={onLogout} to="/">
+                  <Link onClick={this.handleLogout} to="/">
                     Log Out
                   </Link>
                 </li>
@@ -53,7 +60,6 @@ class NavigationBar extends Component {
         <Switch>
           <Route path="/login">
             <Login
-              loggedIn={loggedIn}
               onLogin={onLogin}
               userDetails={userDetails}
               handleUsername={handleUsername}
@@ -61,13 +67,7 @@ class NavigationBar extends Component {
             />
           </Route>
           <Route path="/signin">
-            <SignIn
-              loggedIn={loggedIn}
-              onSignIn={onSignIn}
-              userDetails={userDetails}
-              handleUsername={handleUsername}
-              handlePassword={handlePassword}
-            />
+            <SignIn />
           </Route>
           <Route path="/logout">
             <Logout className="text-white" />
@@ -78,4 +78,6 @@ class NavigationBar extends Component {
   }
 }
 
-export default NavigationBar;
+const mapStateToProps = (state) => state;
+
+export default connect(mapStateToProps, { logOutUser })(NavigationBar);

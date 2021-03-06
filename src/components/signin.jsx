@@ -25,7 +25,7 @@ class SignIn extends Component {
   handleSignInUser = (e) => {
     e.preventDefault();
     this.props.signInUser(this.state);
-    this.setState({ name: "" });
+    this.setState({ name: "", username: "", password: "" });
   };
 
   render() {

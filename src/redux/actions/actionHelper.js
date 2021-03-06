@@ -13,3 +13,10 @@ export const logInUser = (content) => ({
         content
     }
 })
+
+export const logOutUser = (content) => ({
+    type: actions.LOG_OUT,
+    payload: {
+        content
+    }
+})
